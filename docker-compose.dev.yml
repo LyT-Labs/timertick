@@ -1,0 +1,15 @@
+# docker-compose.dev.yml
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: docker/dev/api.Dockerfile
+    ports:
+      - "3000:3000"
+      - "9229:9229"  # Debugger
+    volumes:
+      - ./apps/api:/app
+    working_dir: /app
+    command: ts-node-dev --respawn --inspect=0.0.0.0:9229 src/main.ts
